@@ -22,6 +22,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    #multiple emails can be added at once
     emails = params[:emails].split(",").map(&:strip)
     @users = User.where(:email => emails)
 
@@ -43,6 +44,8 @@ class ProjectsController < ApplicationController
     @name = @project.name
     @components = @project.components
     @component = Component.new
+    @messages = @project.messages
+    @message = Message.new
   end
 
   private

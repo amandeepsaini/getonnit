@@ -45,6 +45,21 @@
 
 	<br/><br/>
 
+	<h3>Messages</h3>
+<ol>
+	<% @messages.each do |message| %>
+	<li>
+	<%= (User.find(message.user_id)).email %> : <%= message.body %>
+	</li>
+	<% end %>
+</ol>
 
+<%= form_for @message do |f| %>
+<%= f.label :message %>
+<%= f.text_field :body %>
+<%= f.hidden_field :user_id, :value => current_user.id %>
+<%= f.hidden_field :project_id, :value => @project.id %>
+<%= f.submit "Send" %>
+<% end %>
 
 	<%= link_to "Home", root_path  %>

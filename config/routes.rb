@@ -1,7 +1,17 @@
 Rails.application.routes.draw do
  
+  # get 'messages/index' 
+
+  # get 'messages/new' 
+
+  # get 'messages/create' 
+
+  # get 'messages/delete'
+
   get 'projects/show' => 'projects#show'
   get '/' => 'projects#index'
+
+  resources :messages, :only => [:create, :delete]  
 
   resources :tasks
   

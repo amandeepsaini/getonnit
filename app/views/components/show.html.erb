@@ -47,12 +47,31 @@
 <%= f.text_area :description %>
 <%= f.label :deadline %>
 <%= f.date_field :deadline %>
+<%= f.label :avatar %>
+<%= f.file_field :avatar %>
 <%= f.hidden_field :component_id, :value => @component.id %>
 
 <%= f.submit "Create Task" %>
 <% end %>
 
-<% Project.find(@component.project_id).users.each do |user|%>
+<h3>Users in Component</h3>
+<% @component.users.each do |user|%>
 <%= user.email %>
 <% end %>
+
+<h3> Add User to Component </h3>
+
+<% @available_users = @available_users - @component.users %>
+
+<ol> <% @available_users.each do |user|%>
+<li> <%= user.email %> 
+      <%= form_for @component, :url => "/components/:id", :method => "PUT" do |f| %>
+      <%= f.hidden_field :component_id, :value => @component.id %>
+      <%= f.hidden_field :user_id, :value => user.id %>
+      <%= f.submit "Add" %>
+      <% end %>
+</li>
+<% end %>
+
+</ol>
 <%= link_to "Home", root_path  %>

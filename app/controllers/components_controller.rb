@@ -28,6 +28,16 @@ class ComponentsController < ApplicationController
   end
 
   def update
+    @component = Component.find(params[:component][:component_id])
+    @user = User.find(params[:component][:user_id])
+
+    if @component.users.include?(@user)
+      redirect_to @component,
+      alert: "User already In"
+    else 
+      @component.users << @user
+      redirect_to "component/:id"
+    end
   end
 
   def edit
@@ -41,6 +51,7 @@ class ComponentsController < ApplicationController
     @name = @component.name
     @tasks = @component.tasks
     @task = Task.new
+    @available_users = Project.find(@component.project_id).users
   end
 
   private

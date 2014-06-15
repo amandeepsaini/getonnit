@@ -7,8 +7,6 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-
-    @task.status == "Incomplete"
     @task.save
     
     redirect_to(:back)
@@ -32,6 +30,6 @@ class TasksController < ApplicationController
   end
     private
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :component_id, :avatar)
+      params.require(:task).permit(:name, :description, :deadline, :component_id, images_attributes: [:avatar])
     end
 end
