@@ -1,0 +1,50 @@
+<h1>Projects#show</h1>
+<p>Find me in app/views/projects/show.html.erb</p>
+
+<h1><%= @name %></h1>
+
+<ol>
+	 <% @components.each do |component| %>
+	 <li>
+
+	 <%= link_to component.name, component %>
+	
+		<%= component.check_status %>
+	</li>
+		
+	<% end %>
+	</ol>
+
+
+	<%= form_for(@component) do |f|%>
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+	<%= f.label :description %>
+	<%= f.text_area :description %>
+	<%= f.label :deadline %>
+	<%= f.date_field :deadline %>
+	<%= f.hidden_field :project_id, :value => @project.id %>
+	<%= f.submit "Create Component" %>
+	<% end %>
+
+	<br/><br/>
+
+	This project currently has users:
+
+	<ul>
+		<% @project.users.each do |user| %>
+		<li><%=user.email%></li>
+		<% end %>
+	</ul>
+
+	<%= form_tag("/projects/#{@project.id}", :method => 'PUT') do %>
+	<%= label_tag "User Emails:" %>
+	<%= email_field_tag :emails %>
+	<%= submit_tag "Add" %>
+	<% end %>
+
+	<br/><br/>
+
+
+
+	<%= link_to "Home", root_path  %>

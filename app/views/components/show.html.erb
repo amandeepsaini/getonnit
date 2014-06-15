@@ -1,0 +1,58 @@
+<h1>Components#show</h1>
+<p>Find me in app/views/components/show.html.erb</p>
+
+<h1><%= @name %></h1>
+
+<ol>
+<% @tasks.each do |task| %>
+<li><%= link_to task.name, task %>
+
+<!-- 
+	<%= form_tag("/#{task}/update", :method => 'PUT') do %>
+<%= hidden_field :status, :value=>"Complete"%>	
+	<%= submit_tag "Complete" %>
+	<% end %>
+
+ <%= form_for @task do |f| %>
+     <%= f.hidden_field :status, :value=>"Complete"%>
+     <%= f.submit "Complete" %>
+   <% end %>
+
+   <%= form_for @task do |f| %>
+     <%= f.hidden_field :name, :value=>"Incomplete"%>
+     <%= f.submit "Incomplete" %>
+   <% end %> -->
+
+ <br>
+ <%= task.status %>
+ <%= task.id %>
+ <%= image_tag task.avatar.url(:thumb) %>
+
+<%= form_for @task, :url => '/tasks/:id', :method => 'put', 
+  :html => { :multipart => true } do |form| %>
+  <%= form.file_field :avatar %>
+  <%= form.hidden_field :task_id, :value => task.id  %>
+  <%= submit_tag "Add File" %>
+<% end %>
+
+</li>
+<% end %>
+</ol>
+
+
+<%= form_for(@task) do |f|%>
+<%= f.label :name %>
+<%= f.text_field :name %>
+<%= f.label :description %>
+<%= f.text_area :description %>
+<%= f.label :deadline %>
+<%= f.date_field :deadline %>
+<%= f.hidden_field :component_id, :value => @component.id %>
+
+<%= f.submit "Create Task" %>
+<% end %>
+
+<% Project.find(@component.project_id).users.each do |user|%>
+<%= user.email %>
+<% end %>
+<%= link_to "Home", root_path  %>

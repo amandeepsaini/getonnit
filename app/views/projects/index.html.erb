@@ -1,0 +1,21 @@
+<h1>Projects#index</h1>
+
+<%= current_user.email %>
+
+
+
+
+<ol>
+<% @projects.each do |project| %>
+<li>
+	<%= link_to project.name, project %> 
+	<%= project.check_status %>
+</li>
+<% end %>
+</ol>
+
+
+<%= link_to "New Project", 'projects/new' %>
+
+
+<%= link_to "Log Out", destroy_user_session_path, method: :delete %>
