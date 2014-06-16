@@ -1,18 +1,16 @@
-<h1>Projects#index</h1>
+<h1>Getonnit</h1>
 
-<%= current_user.email %>
+Welcome <%= current_user.email %>
 
-
-
-
-<ol>
 <% @projects.each do |project| %>
 <li>
 	<%= link_to project.name, project %> 
 	<%= project.check_status %>
+	<%= project.deadline %>
+	
 </li>
 <% end %>
-</ol>
+
 
 
 <%= link_to "New Project", 'projects/new' %>
