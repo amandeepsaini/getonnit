@@ -1,21 +1,33 @@
-<h1>Projects#index</h1>
+<div class="container">
+<h1>projects</h1>
 
-<%= current_user.email %>
+<h3>welcome <%= current_user.email %>!</h3>
 
 
 
 
-<ol>
-<% @projects.each do |project| %>
-<li>
-	<%= link_to project.name, project %> 
-	<%= project.check_status %>
-</li>
-<% end %>
-</ol>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Status</th>
+			<th>Deadline</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @projects.each do |project| %>
+		<tr>
+			<td><%= link_to project.name, project %></td>
+			<td><%= project.check_status %></td>
+			<td><%= project.deadline %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
 
 
 <%= link_to "New Project", 'projects/new' %>
 
 
 <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+</div>
