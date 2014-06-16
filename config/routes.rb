@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get 'projects/show' => 'projects#show'
   get '/' => 'projects#index'
+  
 
   resources :messages, :only => [:create, :delete]  
 

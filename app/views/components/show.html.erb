@@ -1,6 +1,3 @@
-<h1>Components#show</h1>
-<p>Find me in app/views/components/show.html.erb</p>
-
 <h1><%= @name %></h1>
 
 <ol>
@@ -26,7 +23,13 @@
  <br>
  <%= task.status %>
  <%= task.id %>
- <%= image_tag task.avatar.url(:thumb) %>
+<!--   image_tag task.avatar.url(:thumb)
+  form_for @task do |f|
+  f.radio_button("task", "status", "Complete")Complete
+ f.radio_button("task", "status", "Incomplete")Incomplete
+ f.submit "Update"
+end
+ -->
 
 <%= form_for @task, :url => '/tasks/:id', :method => 'put', 
   :html => { :multipart => true } do |form| %>
