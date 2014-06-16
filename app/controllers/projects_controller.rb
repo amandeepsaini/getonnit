@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = current_user.projects
+    @project = Project.new
   end
 
   def create
@@ -12,13 +13,9 @@ class ProjectsController < ApplicationController
 
       #add else statement later with alert/notice
     end
-    redirect_to root_path
+    redirect_to @project
 
 
-  end
-
-  def new
-    @project = Project.new
   end
 
   def update

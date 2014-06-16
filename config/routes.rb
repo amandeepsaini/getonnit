@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   
   resources :components
 
-  resources :projects
+  resources :projects, :except => [:new]
 
   devise_for :users
  

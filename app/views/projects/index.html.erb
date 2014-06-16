@@ -12,6 +12,7 @@
 			<th>Name</th>
 			<th>Status</th>
 			<th>Deadline</th>
+			<th>Modified</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,13 +21,45 @@
 			<td><%= link_to project.name, project %></td>
 			<td><%= project.check_status %></td>
 			<td><%= project.deadline %></td>
+			<td>something here</td>
 		</tr>
 		<% end %>
 	</tbody>
 </table>
 
-
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  New Project
+</button>
 <%= link_to "New Project", 'projects/new' %>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			</div>
+			<div class="modal-body">
+				<%= form_for(@project) do |f|%>
+				<%= f.label :name %>
+				<%= f.text_field :name %>
+				<%= f.label :description %>
+				<%= f.text_area :description %>
+				<%= f.label :deadline %>
+				<%= f.date_field :deadline %>
+				<%= f.hidden_field :user_id, :value => current_user.id %>
+				<%= f.submit "Create Project" %>
+				<% end %>
+
+				<%= link_to "Go Back", root_path %>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
