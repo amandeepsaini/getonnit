@@ -14,7 +14,7 @@ class TasksController < ApplicationController
 
   def update
 
-    @task = Task.find_by(params[:task_id])
+    @task = Task.find(params[:task][:task_id])
     @task.update_attributes(task_params)
     @task.save
     redirect_to (:back)
@@ -30,6 +30,6 @@ class TasksController < ApplicationController
   end
     private
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :component_id, images_attributes: [:avatar])
+      params.require(:task).permit(:name, :description, :deadline, :component_id, :avatar, :status)
     end
 end

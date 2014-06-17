@@ -5,10 +5,12 @@
 <ol>
 	 <% @components.each do |component| %>
 	 <li>
-
+<!-- /components/component.id -->
 	 <%= link_to component.name, component %>
 	
 		<%= component.check_status %>
+
+		<%= link_to "Delete", component, :method => :delete %>
 	</li>
 		
 	<% end %>

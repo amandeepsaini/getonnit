@@ -6,72 +6,78 @@
 
 
 
+		<%= search_form_for @search do |f| %>
+		<div class="field">
+			<%= f.label :name_cont, "Search Projects" %>
+			<%= f.text_field :name_cont %>
+			<%= f.submit "Search" %>
+			<% end %>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th><%= sort_link @search, :name, "Name" %></th>
+						<th>Status</th>
+						<th><%= sort_link @search, :deadline, "Deadline" %></th>
+						<th><%= sort_link @search, :updated_at, "Modified" %></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @projects.each do |project| %>
+					<tr>
+						<td><%= link_to project.name, project %></td>
+						<td>
+							<% if project.check_status == "Empty Project" %>
+							<span class="label label-default"><%= project.check_status.downcase %></span>
+							<% elsif project.check_status == "Complete" %>
+							<span class="label label-success"><%= project.check_status.downcase %></span>
+							<% elsif project.check_status == "Incomplete" %>
+							<span class="label label-danger"><%= project.check_status.downcase %></span>
+							<% end %>
+						</td>
+						<td><%= project.deadline %></td>
+						<td><%= project.updated_at %></td>
+						<!-- remember to add popup to confirm deletetion for this, and components and tasks too -->
+						<td><%= link_to "Delete", project, :method => :delete %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
 
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>name</th>
-					<th>status</th>
-					<th>deadline</th>
-					<th>modified</th>
-				</tr>
-			</thead>
-			<tbody>
-				<% @projects.each do |project| %>
-				<tr>
-					<td><%= link_to project.name, project %></td>
-					<td>
-						<% if project.check_status == "Empty Project" %>
-						<span class="label label-default"><%= project.check_status.downcase %></span>
-						<% elsif project.check_status == "Complete" %>
-						<span class="label label-success"><%= project.check_status.downcase %></span>
-						<% elsif project.check_status == "Incomplete" %>
-						<span class="label label-danger"><%= project.check_status.downcase %></span>
-						<% end %>
-
-
-					</td>
-					<td><%= project.deadline %></td>
-					<td>something here</td>
-				</tr>
-				<% end %>
-			</tbody>
-		</table>
-
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">create a new project</h4>
-					</div>
-					<div class="modal-body">
-						<div class="text-center">
-							<%= form_for(@project) do |f|%>
-							<%= f.label :name, "name" %>
-							<br>
-							<%= f.text_field :name %>
-							<br>
-							<%= f.label :description, "description" %>
-							<br>
-							<%= f.text_area :description %>
-							<br>
-							<%= f.label :deadline, "deadline" %>
-							<br>
-							<%= f.date_field :deadline %>
-							<br>
-							<%= f.hidden_field :user_id, :value => current_user.id %>
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">create a new project</h4>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">close</button>
-						<%= f.submit "create project", :class => "btn btn-primary" %>
-						<% end %>
+						<div class="modal-body">
+							<div class="text-center">
+								<%= form_for(@project) do |f|%>
+								<%= f.label :name, "name" %>
+								<br>
+								<%= f.text_field :name %>
+								<br>
+								<%= f.label :description, "description" %>
+								<br>
+								<%= f.text_area :description %>
+								<br>
+								<%= f.label :deadline, "deadline" %>
+								<br>
+								<%= f.date_field :deadline %>
+								<br>
+								<%= f.hidden_field :user_id, :value => current_user.id %>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+							<%= f.submit "create project", :class => "btn btn-primary" %>
+							<% end %>
+						</div>
 					</div>
 				</div>
 			</div>
+
+
+
 		</div>
-
-
-
-	</div>

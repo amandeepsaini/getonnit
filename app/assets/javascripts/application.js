@@ -13,4 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+
+//added for private pub
+//= require private_pub
+
+
+
 //= require_tree .
+
+
+

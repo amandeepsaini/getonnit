@@ -2,7 +2,8 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @projects = current_user.projects
+    @search = current_user.projects.search(params[:q])
+    @projects = @search.result
     @project = Project.new
   end
 
@@ -33,7 +34,9 @@ class ProjectsController < ApplicationController
   def edit
   end
 
-  def delete
+  def destroy
+    Project.find(params[:id]).destroy
+    redirect_to root_path
   end
 
   def show  
