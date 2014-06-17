@@ -1,7 +1,7 @@
 class Component < ActiveRecord::Base
 	has_and_belongs_to_many :users
-	has_many :tasks, dependent: :destroy
-	belongs_to :projects
+	has_many :tasks, dependent: :destroy	
+	belongs_to :project, :touch => true	
 
 	def check_status	
 		 self.status = "Complete"

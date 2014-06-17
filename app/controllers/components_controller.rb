@@ -36,14 +36,16 @@ class ComponentsController < ApplicationController
       alert: "User already In"
     else 
       @component.users << @user
-      redirect_to "component/:id"
+      redirect_to @component
     end
   end
 
   def edit
   end
 
-  def delete
+  def destroy
+    Component.find(params[:id]).destroy
+    redirect_to (:back)
   end
 
   def show

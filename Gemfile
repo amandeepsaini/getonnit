@@ -2,9 +2,16 @@ source 'https://rubygems.org'
 
 
 #Additional gems
-gem 'paperclip'
+gem 'paperclip' #attach files
 
-gem 'devise'
+gem 'ransack' #search and orginization by name, date, etc
+
+gem 'devise' #user login
+
+gem "private_pub" #private messaging
+
+gem "thin" #messaging through faye with private_pub
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
 # Use sqlite3 as the database for Active Record

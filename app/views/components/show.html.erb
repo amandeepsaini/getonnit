@@ -3,39 +3,32 @@
 <ol>
 <% @tasks.each do |task| %>
 <li><%= link_to task.name, task %>
+  <%= image_tag task.avatar.url(:thumb) %>
 
-<!-- 
-	<%= form_tag("/#{task}/update", :method => 'PUT') do %>
-<%= hidden_field :status, :value=>"Complete"%>	
-	<%= submit_tag "Complete" %>
-	<% end %>
 
- <%= form_for @task do |f| %>
-     <%= f.hidden_field :status, :value=>"Complete"%>
-     <%= f.submit "Complete" %>
-   <% end %>
 
-   <%= form_for @task do |f| %>
-     <%= f.hidden_field :name, :value=>"Incomplete"%>
-     <%= f.submit "Incomplete" %>
-   <% end %> -->
 
  <br>
  <%= task.status %>
- <%= task.id %>
-<!--   image_tag task.avatar.url(:thumb)
-  form_for @task do |f|
-  f.radio_button("task", "status", "Complete")Complete
- f.radio_button("task", "status", "Incomplete")Incomplete
- f.submit "Update"
-end
- -->
+ <%= task.deadline %>
+ 
+  
+<%= form_for task do |f| %>
 
-<%= form_for @task, :url => '/tasks/:id', :method => 'put', 
+<% end %>
+  
+
+
+
+<%= form_for @task, :url => '/tasks/task.id', :method => 'put', 
   :html => { :multipart => true } do |form| %>
+  <%= form.label :complete %>
+  <%= form.radio_button(:status, "Complete") %>
+  <%= form.label :incomplete %>
+  <%= form.radio_button(:status, "Incomplete") %>
   <%= form.file_field :avatar %>
   <%= form.hidden_field :task_id, :value => task.id  %>
-  <%= submit_tag "Add File" %>
+  <%= form.submit "Update Task" %>
 <% end %>
 
 </li>
@@ -43,7 +36,7 @@ end
 </ol>
 
 
-<%= form_for(@task) do |f|%>
+<%= form_for @task, :html => { :multipart => true } do |f|%>
 <%= f.label :name %>
 <%= f.text_field :name %>
 <%= f.label :description %>

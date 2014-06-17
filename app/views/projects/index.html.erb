@@ -4,15 +4,23 @@
 <h3>welcome <%= current_user.email %>!</h3>
 
 
+<%= search_form_for @search do |f| %>
+	<div class="field">
+		<%= f.label :name_cont, "Search Projects" %>
+		<%= f.text_field :name_cont %>
+		<%= f.submit "Search" %>
 
+	</div>
+
+<% end %>
 
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th>Name</th>
+			<th><%= sort_link @search, :name, "Name" %></th>
 			<th>Status</th>
-			<th>Deadline</th>
-			<th>Modified</th>
+			<th><%= sort_link @search, :deadline, "Deadline" %></th>
+			<th><%= sort_link @search, :updated_at, "Modified" %></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,7 +29,12 @@
 			<td><%= link_to project.name, project %></td>
 			<td><%= project.check_status %></td>
 			<td><%= project.deadline %></td>
-			<td>something here</td>
+			<td><%= project.updated_at %></td>
+
+
+			<!-- remember to add popup to confirm deletetion for this, and components and tasks too -->
+			<td><%= link_to "Delete", project, :method => :delete %></td>
+
 		</tr>
 		<% end %>
 	</tbody>
