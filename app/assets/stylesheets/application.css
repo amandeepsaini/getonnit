@@ -17,6 +17,7 @@
 body {
 	font-family: 'Lato';
   background-color: #f3fcf7;
+  text-transform: lowercase;
 }
 #logo {
 	max-width:250px; 
@@ -118,3 +119,11 @@ body {
 }
 .navbar-custom .navbar-link:hover {
   color: #333;
+}
+.ui.menu .item {
+  font-size:1.3rem;
+}
+#emails {
+  color: black;
+}
+}

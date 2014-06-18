@@ -20,7 +20,7 @@
         <img id="coffeelogo" src="../assets/coffeecup.png">
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <p class="navbar-text">welcome, <%= current_user.first_name.downcase %> <%= current_user.last_name.downcase %>!</p>
+        <p class="navbar-text">welcome, <%= current_user.first_name %> <%= current_user.last_name %>!</p>
         <li><%= link_to "log out", destroy_user_session_path, method: :delete %></li>
       </ul>
     </div><!-- /.navbar-collapse -->

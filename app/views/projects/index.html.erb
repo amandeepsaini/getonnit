@@ -28,11 +28,11 @@
 						<td><%= link_to project.name, project %></td>
 						<td>
 							<% if project.check_status == "Empty Project" %>
-							<span class="label label-default"><%= project.check_status.downcase %></span>
+							<span class="label label-default"><%= project.check_status %></span>
 							<% elsif project.check_status == "Complete" %>
-							<span class="label label-success"><%= project.check_status.downcase %></span>
+							<span class="label label-success"><%= project.check_status %></span>
 							<% elsif project.check_status == "Incomplete" %>
-							<span class="label label-danger"><%= project.check_status.downcase %></span>
+							<span class="label label-danger"><%= project.check_status %></span>
 							<% end %>
 						</td>
 						<td><%= project.deadline %></td>
