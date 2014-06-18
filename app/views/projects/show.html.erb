@@ -2,12 +2,23 @@
 
 <div class="container">
 <h1><%= @name %></h1>
-
-
 	<h3>components
 		<button class="btn btn-custom btn-lg pull-right" data-toggle="modal" data-target="#myModal">
 			new component
 		</button></h3>
+<ol>
+	 <% @components.each do |component| %>
+	 <li>
+
+	 <%= link_to component.name, component %>
+	
+		<%= component.check_status %>
+		<% progress = component.check_progress %>
+		completed
+		<%= progress[:completed_ratio] %> 
+		overdue 
+		<%= progress[:overdue_tasks_ratio]%> 
+		<% end %>
 
 	<table class="table table-hover">
 				<thead>

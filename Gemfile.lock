@@ -175,6 +175,7 @@ DEPENDENCIES
   devise
   jbuilder (~> 2.0)
   jquery-rails
+  mail
   paperclip
   private_pub
   rails (= 4.1.1)

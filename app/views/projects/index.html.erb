@@ -35,9 +35,11 @@
 							<span class="label label-danger"><%= project.check_status %></span>
 							<% end %>
 						</td>
-						<td><%= project.deadline %></td>
-						<td><%= project.updated_at %></td>
+						<td><%= project.deadline.strftime("%b %d, %Y") %></td>
+						<td><%= project.updated_at.strftime("%b %d, %Y %I:%M %P") %></td>
 						<!-- remember to add popup to confirm deletetion for this, and components and tasks too -->
+						<td> <%= time_ago_in_words(project.updated_at) %> ago</td>
+
 						<td><%= link_to "Delete", project, :method => :delete %></td>
 					</tr>
 					<% end %>
