@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 
 #Additional gems
+gem 'mail' #send emails
+
 gem 'paperclip' #attach files
 
 gem 'ransack' #search and orginization by name, date, etc

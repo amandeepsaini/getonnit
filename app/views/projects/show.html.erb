@@ -5,10 +5,15 @@
 <ol>
 	 <% @components.each do |component| %>
 	 <li>
-<!-- /components/component.id -->
+
 	 <%= link_to component.name, component %>
 	
 		<%= component.check_status %>
+		<% progress = component.check_progress %>
+		completed
+		<%= progress[:completed_ratio] %> 
+		overdue 
+		<%= progress[:overdue_tasks_ratio]%> 
 
 		<%= link_to "Delete", component, :method => :delete %>
 	</li>
