@@ -123,7 +123,9 @@ body {
 .ui.menu .item {
   font-size:1.3rem;
 }
-#emails {
+#emails, .black-font {
   color: black;
 }
+.sidebar-button {
+  position:fixed;
 }

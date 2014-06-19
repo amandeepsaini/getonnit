@@ -44,9 +44,9 @@ class Component < ActiveRecord::Base
 			end
 		end
 
-		progress[:overdue_tasks_ratio] = (overdue_tasks.size.to_f/total_tasks)
+		progress[:overdue_tasks_ratio] = (overdue_tasks.size.to_f/total_tasks)*100
 
-		progress[:completed_ratio] = (total_completed_tasks.to_f/total_tasks) 
+		progress[:completed_ratio] = (total_completed_tasks.to_f/total_tasks)*100
 		return progress
 
 	end
