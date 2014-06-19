@@ -20,9 +20,11 @@ class Task < ActiveRecord::Base
  	end
 
 
- 	def check_status  			
-		if self.deadline < Date.today && self.status == "Incomplete"
-			self.status = "Overdue"
+ 	def check_status
+ 		unless self.deadline == nil  			
+			if self.deadline < Date.today && self.status == "Incomplete"
+				self.status = "Overdue"
+			end
 		end
 	 self.status 
 	end
