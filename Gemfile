@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 #Additional gems
-gem 'rmagick'
+#gem 'rmagick'
 
 gem 'mail' #send emails
 
