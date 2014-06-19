@@ -1,31 +1,40 @@
 <a class="add-members">
   <div class="ui black huge launch right attached button sidebar-button">
-       <span class="glyphicon glyphicon-user"></span> 
-      <span class="sidebar-text" style="display: none;">add members</span>
-    </div>
+   <span class="glyphicon glyphicon-user"></span> 
+   <span class="sidebar-text" style="display: none;">add members</span>
+ </div>
 </a>
 <br>
 <br>
 <a class="message">
   <div class="ui black huge launch right attached button sidebar-button">
-       <span class="glyphicon glyphicon-envelope"></span> 
-      <span class="sidebar-text" style="display: none;">messages</span>
-    </div>
+   <span class="glyphicon glyphicon-envelope"></span> 
+   <span class="sidebar-text" style="display: none;">messages</span>
+ </div>
 </a>
 <br>
 <br>
 <a class="new-component">
   <div class="ui black huge launch right attached button sidebar-button">
-       <span class="glyphicon glyphicon-plus"></span> 
-      <span class="sidebar-text" style="display: none;">new component</span>
-    </div>
+   <span class="glyphicon glyphicon-plus"></span> 
+   <span class="sidebar-text" style="display: none;">new component</span>
+ </div>
 </a>
-  
-<div class="ui vertical demo sidebar inverted menu members-sidebar">
+
+<div class="ui vertical demo sidebar inverted menu members-sidebar very wide">
   <div class="item">
     <h2><div class="text-center"><span class="glyphicon glyphicon-user"></span> members</div></h2>
-  This project currently has users:
-  <br>
+    <br>
+        <h4>add more members:</h4>
+    <%= form_tag("/projects/#{@project.id}", :method => 'PUT') do %>
+    <%= label_tag "User Emails:" %>
+    <div class="ui icon input">
+        <%= email_field_tag :emails %>
+    </div>
+    <%= submit_tag "Add", :class => "btn btn-default" %>
+    <% end %>
+    <br>
+    <h4>This project currently has users:</h4>
     <table class="table">
       <thead>
         <th></th>
@@ -39,17 +48,59 @@
         </tr>
         <% end %>
       </tbody>
-    </table>
+    </table>    
+  </div>
+</div>
 
-
-  <%= form_tag("/projects/#{@project.id}", :method => 'PUT') do %>
-  <%= label_tag "User Emails:" %>
-  <%= email_field_tag :emails %>
-  <%= submit_tag "Add" %>
+<div class="ui vertical demo sidebar inverted menu messages-sidebar very wide">
+  <div class="item">
+    <h2><div class="text-center"><span class="glyphicon glyphicon-envelope"></span> messages</div></h2>
+    <br>
+        <h4>add more messages:</h4>
+    <%= form_for @message do |f| %>
+<%= f.label :message, "message:" %>
+<div class="ui icon input">
+<%= f.text_field :body %>
+</div>
+<%= f.hidden_field :user_id, :value => current_user.id %>
+<%= f.hidden_field :project_id, :value => @project.id %>
+    <%= f.submit "Send", :class => "btn btn-default" %>
+    <% end %>
+    <br>
+    <h4>current messages:</h4>
+    <ol>
+  <% @messages.each do |message| %>
+  <li>
+  <%= (User.find(message.user_id)).first_name %>: <%= message.body %>
+  </li>
   <% end %>
-    <div class="menu">
-      <a class="item">About</a>
-      <a class="item">Contact Us</a>
-    </div>
+</ol>  
+  </div>
+</div>
+
+<div class="ui vertical demo sidebar inverted menu component-sidebar very wide">
+  <div class="item">
+    <h2><div class="text-center"><span class="glyphicon glyphicon-plus"></span> add component</div></h2>
+    <br>
+        <h4>create a new component:</h4>
+        <div class="text-center">
+    <%= form_for(@component) do |f|%>
+  <%= f.label :name %>
+  <br>
+  <%= f.text_field :name, :class => "black-font", :size => "40" %>
+  <br>
+  <%= f.label :description %>
+  <br>
+  <%= f.text_area :description, :class => "black-font", :size => "40x10" %>
+  <br>
+  <%= f.label :deadline %>
+  <br>
+  <%= f.date_field :deadline, :class => "black-font" %>
+  <br>
+  <%= f.hidden_field :project_id, :value => @project.id %>
+  <br>
+              <%= f.submit "create component", :class => "btn btn-default" %>
+              <% end %>
+              </div>
   </div>
 </div>

@@ -1,123 +1,48 @@
 <%= render :partial => 'sidebar' %>
 
 <div class="container">
-<h1><%= @name %></h1>
-	<h3>components
-		<button class="btn btn-custom btn-lg pull-right" data-toggle="modal" data-target="#myModal">
-			new component
-		</button></h3>
-<ol>
-	 <% @components.each do |component| %>
-	 <li>
-
-	 <%= link_to component.name, component %>
-	
-		<%= component.check_status %>
-		<% progress = component.check_progress %>
-		completed
-		<%= progress[:completed_ratio] %> 
-		overdue 
-		<%= progress[:overdue_tasks_ratio]%> 
-		<% end %>
-
+	<h1><%= @name %></h1>
+	<h3>components</h3>
 	<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>name</th>
-						<th>status</th>
-						<th>deadline</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<% @components.each do |component| %>
-					<tr>
-						<!-- /components/component.id -->
-						<td class="col-md-2"><%= link_to component.name, component %></td>
-						<td class="col-md-7">
-							<div class="progress">
-  <div class="progress-bar progress-bar-success" style="width: 35%">
-   	35% Complete
-  </div>
-  <div class="progress-bar progress-bar-warning" style="width: 20%">
-    if 20%> behind (warning)
-  </div>
-  <div class="progress-bar progress-bar-danger" style="width: 10%">
-    if >20% behind (danger)
-  </div>
-</div>
-						</td>
-						<td class="col-md-2"><%= component.deadline %></td>
-						<!-- remember to add popup to confirm deletetion for this, and components and tasks too -->
-						<td class="col-md-1"><%= link_to "Delete", component, :method => :delete %></td>
-					</tr>
-					<% end %>
-				</tbody>
-			</table>
+		<thead>
+			<tr>
+				<th>name</th>
+				<th>status</th>
+				<th>deadline</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @components.each do |component| %>
+			<% progress = component.check_progress %>
+			<% completed = progress[:completed_ratio] %>
+			<% overdue = progress[:overdue_tasks_ratio] %>
+			<tr>
+				<!-- /components/component.id -->
+				<td class="col-md-2"><%= link_to component.name, component %></td>
+				<td class="col-md-7">
+					<% if completed.nan? || overdue.nan? %>
+					no tasks added
+					<% else %>
+					<div class="progress">
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">create a new component</h4>
-						</div>
-						<div class="modal-body">
-							<div class="text-center">
-								
-
-								<%= form_for(@component) do |f|%>
-	<%= f.label :name %>
-	<br>
-	<%= f.text_field :name %>
-	<br>
-	<%= f.label :description %>
-	<br>
-	<%= f.text_area :description %>
-	<br>
-	<%= f.label :deadline %>
-	<br>
-	<%= f.date_field :deadline %>
-	<br>
-	<%= f.hidden_field :project_id, :value => @project.id %>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">close</button>
-							<%= f.submit "create component", :class => "btn btn-primary" %>
-							<% end %>
-						</div>
+						<% if completed > 0.0 %>
+						<%= content_tag(:div, "#{completed.to_i}%", :class => "progress-bar progress-bar-success", :style => "width: #{completed}%") %>
+						<% end %>
+						<% if overdue >= 20.0 %>
+						<%= content_tag(:div, "#{overdue.to_i}%", :class => "progress-bar progress-bar-danger", :style => "width: #{overdue}%") %>
+						<% elsif overdue > 0.0 %>
+						<%= content_tag(:div, "#{overdue.to_i}%", :class => "progress-bar progress-bar-warning", :style => "width: #{overdue}%") %>
+						<% else %>
+						<div></div>
+						<% end %>
 					</div>
-				</div>
-			</div>
-
-	<br/><br/>
-
-
-	
-
-	<h3>Messages</h3>
-<ol>
-	<% @messages.each do |message| %>
-	<li>
-	<%= (User.find(message.user_id)).email %> : <%= message.body %>
-	</li>
-	<% end %>
-</ol>
-
-<%= form_for @message do |f| %>
-<%= f.label :message %>
-<%= f.text_field :body %>
-<%= f.hidden_field :user_id, :value => current_user.id %>
-<%= f.hidden_field :project_id, :value => @project.id %>
-<%= f.submit "Send" %>
-<% end %>
-<br>
-<br>
-<br>
-
-
-
-
-
-	</div>
+				</td>
+				<% end %>
+				<td class="col-md-2"><%= component.deadline %></td>
+				<!-- remember to add popup to confirm deletetion for this, and components and tasks too -->
+				<td class="col-md-1"><%= link_to "Delete", component, :method => :delete %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
