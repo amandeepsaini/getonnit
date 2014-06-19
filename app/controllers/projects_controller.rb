@@ -32,6 +32,16 @@ class ProjectsController < ApplicationController
     redirect_to @project
   end
 
+
+  def invite_user
+    name = params[:name]
+    email = params[:email]
+    sender = User.find(params[:sender_id])
+    UserMailer.invite_user(email, name, sender).deliver
+
+    redirect_to root_path
+  end
+
   def edit
   end
 

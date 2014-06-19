@@ -5,6 +5,8 @@ class TasksController < ApplicationController
   def new
   end
 
+
+
   def create
     @task = Task.new(task_params)
     @task.save
@@ -15,7 +17,11 @@ class TasksController < ApplicationController
   def update
 
     @task = Task.find(params[:task][:task_id])
-    @task.update_attributes(task_params)
+    if params[:task][:avatar] == "delete_attachment"
+      @task.avatar = nil
+    else
+      @task.update_attributes(task_params)
+    end
     @task.save
     redirect_to (:back)
   end

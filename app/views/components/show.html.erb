@@ -12,10 +12,13 @@
  <%= task.status %>
  <%= task.deadline %>
  
-  
-<%= form_for task do |f| %>
-
+ <%= form_for @task, :url => '/tasks/task.id', :method => 'put', 
+  :html => { :multipart => true } do |form| %>
+<%= form.hidden_field :task_id, :value => task.id %>
+<%= form.hidden_field :avatar, :value => "delete_attachment" %>
+<%= form.submit "Delete Attachment" %>
 <% end %>
+
   
 
 
@@ -30,6 +33,7 @@
   <%= form.hidden_field :task_id, :value => task.id  %>
   <%= form.submit "Update Task" %>
 <% end %>
+
 
 </li>
 <% end %>

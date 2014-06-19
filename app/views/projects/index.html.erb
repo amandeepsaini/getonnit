@@ -50,6 +50,17 @@
 				</tbody>
 			</table>
 
+			<%= form_tag ('/invite_user') do %>
+				<%= label_tag :name %>
+				<%= text_field_tag :name %>
+				<%= label_tag :email %>
+				<%= email_field_tag :email %>
+				<%= hidden_field_tag :sender_id, current_user.id %>
+				<%= submit_tag "Invite" %>
+			<% end %>
+
+<%= link_to "Go Back", root_path %>
+
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">

@@ -10,8 +10,8 @@ Rails.application.routes.draw do
 
   get 'projects/show' => 'projects#show'
   get '/' => 'projects#index'
+  post '/invite_user' => 'projects#invite_user'
   
-
   resources :messages, :only => [:create, :delete]  
 
   resources :tasks
