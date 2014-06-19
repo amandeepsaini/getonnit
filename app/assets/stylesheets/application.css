@@ -126,4 +126,6 @@ body {
 #emails {
   color: black;
 }
+.sidebar-button {
+  position:fixed;
 }
