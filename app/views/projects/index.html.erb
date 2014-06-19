@@ -35,7 +35,11 @@
 							<span class="label label-danger"><%= project.check_status %></span>
 							<% end %>
 						</td>
-						<td><%= project.deadline.strftime("%b %d, %Y") %></td>
+						<td><% if project.deadline == nil %>
+								<%= "No Deadline" %>
+							<% else %>
+							<%= project.deadline.strftime("%b %d, %Y") %>
+							<% end %></td>
 						<td><%= project.updated_at.strftime("%b %d, %Y %I:%M %P") %></td>
 						<!-- remember to add popup to confirm deletetion for this, and components and tasks too -->
 						<td> <%= time_ago_in_words(project.updated_at) %> ago</td>
