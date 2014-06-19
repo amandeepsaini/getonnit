@@ -53,7 +53,9 @@ class ComponentsController < ApplicationController
     @name = @component.name
     @tasks = @component.tasks
     @task = Task.new
-    @available_users = Project.find(@component.project_id).users
+    @available_users = @component.project.users
+    @search = @component.project.users.search(params[:q])
+    @search.result
   end
 
   private

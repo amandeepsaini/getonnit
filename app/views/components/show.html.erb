@@ -3,19 +3,21 @@
 <ol>
 <% @tasks.each do |task| %>
 <li><%= link_to task.name, task %>
-  <%= image_tag task.avatar.url(:thumb) %>
+  <%= link_to "View Attachment" ,task.document.url, :target => "_blank" %>
+
+
 
 
 
 
  <br>
- <%= task.status %>
+ <%= task.check_status %>
  <%= task.deadline %>
  
  <%= form_for @task, :url => '/tasks/task.id', :method => 'put', 
   :html => { :multipart => true } do |form| %>
 <%= form.hidden_field :task_id, :value => task.id %>
-<%= form.hidden_field :avatar, :value => "delete_attachment" %>
+<%= form.hidden_field :document, :value => "delete_attachment" %>
 <%= form.submit "Delete Attachment" %>
 <% end %>
 
@@ -29,7 +31,7 @@
   <%= form.radio_button(:status, "Complete") %>
   <%= form.label :incomplete %>
   <%= form.radio_button(:status, "Incomplete") %>
-  <%= form.file_field :avatar %>
+  <%= form.file_field :document %>
   <%= form.hidden_field :task_id, :value => task.id  %>
   <%= form.submit "Update Task" %>
 <% end %>

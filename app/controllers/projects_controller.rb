@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     if @project.save
       current_user.projects << @project
-      UserMailer.registration_confirmation(current_user).deliver
+      #UserMailer.registration_confirmation(current_user).deliver
 
       #add else statement later with alert/notice
     end

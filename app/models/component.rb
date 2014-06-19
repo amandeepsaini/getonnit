@@ -9,7 +9,7 @@ class Component < ActiveRecord::Base
 			self.status = "No Tasks"
 		end
 		self.tasks.each do |task|
-			if task.status == "Incomplete"
+			if task.status == "Incomplete" || task.status == "Overdue"
 				self.status = "Incomplete"
 			end
 		end

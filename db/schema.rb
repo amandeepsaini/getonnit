@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140615183220) do
+ActiveRecord::Schema.define(version: 20140619131019) do
 
   create_table "components", force: true do |t|
     t.string   "name"
@@ -52,6 +52,11 @@ ActiveRecord::Schema.define(version: 20140615183220) do
     t.integer "project_id", null: false
   end
 
+  create_table "schedules", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tasks", force: true do |t|
     t.string   "name"
     t.text     "description"
@@ -64,6 +69,10 @@ ActiveRecord::Schema.define(version: 20140615183220) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
   create_table "tasks_users", id: false, force: true do |t|

@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 
 #Additional gems
+gem 'rmagick'
+
 gem 'mail' #send emails
 
 gem 'paperclip' #attach files
