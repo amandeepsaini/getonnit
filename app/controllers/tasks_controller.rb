@@ -41,7 +41,9 @@ class TasksController < ApplicationController
   def edit
   end
 
-  def delete
+  def destroy
+    Task.find(params[:id]).destroy
+    redirect_to (:back)
   end
 
   def show
