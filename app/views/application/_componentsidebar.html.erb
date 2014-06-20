@@ -1,0 +1,94 @@
+<a class="new-component">
+  <div class="ui black huge launch right attached button sidebar-button">
+   <span class="glyphicon glyphicon-plus"></span> 
+   <span class="sidebar-text" style="display: none;">new task</span>
+ </div>
+</a>
+<br>
+<br>
+<a class="add-members">
+  <div class="ui black huge launch right attached button sidebar-button">
+   <span class="glyphicon glyphicon-user"></span> 
+   <span class="sidebar-text" style="display: none;">add members</span>
+ </div>
+</a>
+<br>
+<br>
+
+  <div class="ui vertical demo sidebar inverted menu component-sidebar very wide">
+    <div class="item">
+      <h2><div class="text-center"><span class="glyphicon glyphicon-plus"></span> add task</div></h2>
+      <br>
+      <h4>create a new task:</h4>
+      <div class="text-center">
+        <%= form_for @task, :html => { :multipart => true } do |f|%>
+        <br>
+        <%= f.label :name %>
+        <br>
+        <%= f.text_field :name, :class => "black-font" %>
+        <br>
+        <%= f.label :description %>
+        <br>
+        <%= f.text_area :description, :class => "black-font" %>
+        <br>
+        <%= f.label :deadline %>
+        <br>
+        <%= f.date_field :deadline, :class => "black-font" %>
+        <br>
+        <br>
+        <div class="col-md-2 col-md-offset-3"><%= f.file_field :avatar %></div>
+        <br>
+        <%= f.hidden_field :component_id, :value => @component.id %>
+        <br>
+
+        <%= f.submit "Create Task", :class => "btn btn-default" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+<div class="ui vertical demo sidebar inverted menu members-sidebar very wide">
+  <div class="item">
+    <h2><div class="text-center"><span class="glyphicon glyphicon-user"></span> members</div></h2>
+    <br>
+    <h4>add more members:</h4>
+
+    <h3>Users in Component</h3>
+    <table class="table">
+      <thead>
+        <th></th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% @component.users.each do |user|%>
+        <tr>
+          <td><%= user.first_name %> <%= user.last_name %></td>
+          <td><%= user.email %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <h3> Add Users to Component: </h3>
+
+    <% available_users_component = @available_users - @component.users %>
+    <table class="table">
+      <thead>
+        <th></th>
+      </thead>
+      <tbody>
+        <% available_users_component.each do |user|%>
+
+        <tr><td><%= user.email %></td>
+          <%= form_for @component, :method => "PUT" do |f| %>
+          <%= f.hidden_field :user_id, :value => user.id %>
+          <td><%= f.submit "Add" %></td></tr>
+          <% end %>
+
+        
+     
+      <% end %>
+      </tbody>
+       </table>
+    </div>
+  </div>

@@ -12,7 +12,14 @@
 
 
 <% @tasks.each do |task| %>
-<button class="btn btn-custom btn-lg" data-toggle="modal" data-target=<%= "#myModal#{task.id}" %>>
+<% if task.check_status == "Complete" %>
+<% b_class = "btn-success" %>
+<% elsif task.check_status == "Incomplete" %>
+<% b_class = "btn-warning" %>
+<% else %>
+<% b_class = "btn-danger" %>
+<% end %>
+<button class="btn <%= b_class %> btn-lg" data-toggle="modal" data-target=<%= "#myModal#{task.id}" %>>
   <%= task.name %>
   <br>
   <%= task.check_status %>
@@ -28,58 +35,74 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id=<%= "myModal#{task.id}" %>>
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content modal-color-<%= task.check_status.downcase[0] %>">
+      <div class="modal-header modal-header-b">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">create a new project</h4>
+        <h2 class="modal-title" id="myModalLabel"><div class="text-center"><%= task.name %><h3><% if task.deadline == nil %>
+  <%= "No Deadline" %>
+  <% else %>
+  <%= task.deadline.strftime("%b %d, %Y") %>
+  <% end %></h3></div></h2>
       </div>
       <div class="modal-body">
         <div class="text-center">
+
+          
+          <h4>description:</h4>
+          <p><%= task.description %></p>
+          <br>
          <% unless task.document.url == "/documents/original/missing.png" %>
          <%= link_to "View Attachment", task.document.url, :target => "_blank" %>
-         <% end %>
-         <br>
          <%= form_for task, :method => 'put', 
          :html => { :multipart => true } do |form| %>
          <%= form.hidden_field :task_id, :value => task.id %>
          <%= form.hidden_field :document, :value => "delete_attachment" %>
-         <%= form.submit "Delete Attachment" %>
+         <%= form.submit "delete attachment", :class => "btn btn-default" %>
          <% end %>
-         <% if task.status == "Complete" %>
+         <% end %>
+         
+         <br>
+         
+         <%= form_for task, :method => 'put', 
+         :html => { :multipart => true } do |form| %>
+         <div class="col-md-2 col-md-offset-4"><%= form.file_field :document %></div>
+         <br>
+         <%= form.submit "add attachment", :class => "btn btn-default" %>
+         <% end %>
+         <br>
+         <h4>users in task:</h4>
+         <% available_users_task = @available_users - task.users %>
+         <% available_users_task.each do |user|%>
+        
+          <%= form_for task, :method => "PUT" do |f| %>
+          <%= f.hidden_field :user_id, :value => user.id %>
+          <%= user.email %> <%= f.submit "add", :class => "btn btn-default btn-sm" %>
+          <% end %>
+          <% end %>
+        
+
+      
+      <% task.users.each do |user| %>
+      <%= user.email %>
+      <% end %>
+<br>
+<br>
+<% if task.status == "Complete" %>
          <%= form_for task, :method => 'put' do |form| %>
          <%= form.hidden_field :status, :value => "Incomplete" %>
-         <%= form.submit "Mark As Incomplete"%>
+         <%= form.submit "mark as incomplete", :class => "btn btn-warning"%>
          <% end %>
          <% else %>
          <%= form_for task, :method => 'put' do |form| %>
          <%= form.hidden_field :status, :value => "Complete" %>
-         <%= form.submit "Mark As Complete"%>
+         <%= form.submit "mark as complete", :class => "btn btn-success"%>
          <% end %>
          <% end %>
-         <%= form_for task, :method => 'put', 
-         :html => { :multipart => true } do |form| %>
-         <%= form.file_field :document %>
-         <%= form.submit "Add Attachment" %>
-         <% end %>
-         <% available_users_task = @available_users - task.users %>
-         <% available_users_task.each do |user|%>
-         <li> <%= user.email %> 
-          <%= form_for task, :method => "PUT" do |f| %>
-          <%= f.hidden_field :user_id, :value => user.id %>
-          <%= f.submit "Add" %>
-          <% end %>
-          <% end %>
-        </li>
-        <%= link_to "Delete", task, :method => :delete %>
-
-      </li>
-      <% task.users.each do |user| %>
-      <%= user.email %>
-      <% end %>
-
+<br>
+        <%= link_to "Delete", task, :method => :delete, :class => "btn btn-danger" %>
     </div>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer modal-footer-b">
     <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
   </div>
 </div>
@@ -93,58 +116,10 @@
 
 
 
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%= form_for @task, :html => { :multipart => true } do |f|%>
-<%= f.label :name %>
-<%= f.text_field :name %>
-<%= f.label :description %>
-<%= f.text_area :description %>
-<%= f.label :deadline %>
-<%= f.date_field :deadline %>
-<%= f.label :avatar %>
-<%= f.file_field :avatar %>
-<%= f.hidden_field :component_id, :value => @component.id %>
-
-<%= f.submit "Create Task" %>
-<% end %>
-
-<h3>Users in Component</h3>
-<% @component.users.each do |user|%>
-<%= user.email %>
-<% end %>
-
-<h3> Add User to Component </h3>
-
-<% available_users_component = @available_users - @component.users %>
-
-<ol> <% available_users_component.each do |user|%>
-
-<li> <%= user.email %> 
-      <%= form_for @component, :method => "PUT" do |f| %>
-      <%= f.hidden_field :user_id, :value => user.id %>
-      <%= f.submit "Add" %>
-      <% end %>
-</li>
-<% end %>
-
-
+<br>
 </ol>
 <%= link_to "Home", root_path  %>
-<%= link_to "Back to Project Page", @component.project %>
+<br>
+<%= link_to "Back", @component.project %>
+
+</div>

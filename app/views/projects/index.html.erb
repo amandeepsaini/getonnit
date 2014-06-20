@@ -1,8 +1,12 @@
 <div class="container">
 	<h1>projects
-		<button class="btn btn-custom btn-lg pull-right" data-toggle="modal" data-target="#myModal">
+		<button class="btn btn-custom2 btn-md pull-right" data-toggle="modal" data-target="#myModalInvite">
+			invite friends
+		</button>
+		<button class="btn btn-custom btn-md pull-right" data-toggle="modal" data-target="#myModal">
 			new project
-		</button></h1>
+		</button>
+		</h1>
 
 
 
@@ -52,18 +56,6 @@
 					<% end %>
 				</tbody>
 			</table>
-
-			<%= form_tag ('/invite_user') do %>
-				<%= label_tag :name %>
-				<%= text_field_tag :name %>
-				<%= label_tag :email %>
-				<%= email_field_tag :email %>
-				<%= hidden_field_tag :sender_id, current_user.id %>
-				<%= submit_tag "Invite" %>
-			<% end %>
-
-
-
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -92,6 +84,33 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">close</button>
 							<%= f.submit "create project", :class => "btn btn-primary" %>
+							<% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="myModalInvite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">invite friends</h4>
+						</div>
+						<div class="modal-body">
+							<div class="text-center">
+								<%= form_tag ('/invite_user') do %>
+				<%= label_tag :name %>
+				<%= text_field_tag :name %>
+				<br>
+				<%= label_tag :email %>
+				<%= email_field_tag :email %>
+				<br>
+				<%= hidden_field_tag :sender_id, current_user.id %>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+							<%= submit_tag "invite", :class => "btn btn-primary" %>
 							<% end %>
 						</div>
 					</div>

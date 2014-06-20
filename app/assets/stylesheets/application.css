@@ -129,3 +129,44 @@ body {
 .sidebar-button {
   position:fixed;
 }
+.btn-lg {
+  width: 24.7%;
+  padding: 6.7% 16px;
+  height: 6.7%;
+  margin-bottom: 4px;
+}
+.modal-color-c {
+  background-color: #dafcc6;
+}
+.modal-color-i {
+  background-color: #fcf7b4;
+}
+.modal-color-o {
+  background-color: #fce3e7;
+}
+.modal-header-b {
+  border-bottom: none;
+}
+.modal-footer-b {
+  border-top: none;
+}
+.btn-md {
+  width: 15%;
+  padding: 10px 16px;
+  height: 20%;
+  margin-bottom: 4px;
+}
+.btn-custom2 {
+color: #fff;
+  background-color: #70a1ca;
+  border-color: #93b8d3;
+}
+.btn-custom2:hover,
+.btn-custom2:focus,
+.btn-custom2:active,
+.btn-custom2.active,
+.open .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #4386ca;
+  border-color: #4386ca;
+}
