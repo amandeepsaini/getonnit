@@ -2,6 +2,7 @@
 
 <div class="container">
 	<h1><%= @name %></h1>
+	<h4><%= @project.description %></h4>
 	<h3>components</h3>
 	<table class="table table-hover">
 		<thead>
@@ -21,7 +22,19 @@
 			<tr>
 				<!-- /components/component.id -->
 				<td class="col-md-2"><%= link_to component.name, component %></td>
-				<td class="col-md-1"> <%= component.check_status %> </td>
+				<td class="col-md-1"> 
+						<% if component.check_status == "No Tasks" %>
+							<span class="label label-default"><%= component.check_status %></span>
+							<% elsif component.check_status == "Complete" %>
+							<span class="label label-primary"><%= component.check_status %></span>
+							<% elsif component.check_status == "On Track" %>
+							<span class="label label-success"><%= component.check_status %></span>
+							<% elsif component.check_status == "Off Track" %>
+							<span class="label label-danger"><%= component.check_status %></span>
+							<% end %>
+
+
+				</td>
 				<td class="col-md-6">
 					<% if completed.nan? || overdue.nan? %>
 					no tasks added
