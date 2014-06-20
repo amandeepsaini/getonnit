@@ -28,7 +28,7 @@ class ComponentsController < ApplicationController
   end
 
   def update
-    @component = Component.find(params[:component][:component_id])
+    @component = Component.find(params[:id])
     @user = User.find(params[:component][:user_id])
 
     if @component.users.include?(@user)
@@ -36,6 +36,7 @@ class ComponentsController < ApplicationController
       alert: "User already In"
     else 
       @component.users << @user
+      @component.save
       redirect_to @component
     end
   end

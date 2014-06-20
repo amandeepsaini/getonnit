@@ -21,12 +21,17 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    #multiple emails can be added at once
-    emails = params[:emails].split(",").map(&:strip)
-    @users = User.where(:email => emails)
+    email = params[:email]
+    @user = User.where(:email => email)
 
     @project = Project.find(params[:id])
-    @project.users << @users
+    if @project.users.include?(@user)
+      redirect_to @project,
+      alert: "User already In"
+    else
+      @project.users << @user
+      @project.save
+    end
 
     #redirect_to :action => 'show', :id => @project.id
     redirect_to @project

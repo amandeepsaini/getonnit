@@ -28,11 +28,13 @@
 					<tr>
 						<td><%= link_to project.name, project %></td>
 						<td>
-							<% if project.check_status == "Empty Project" %>
+							<% if project.check_status == "Empty" %>
 							<span class="label label-default"><%= project.check_status %></span>
 							<% elsif project.check_status == "Complete" %>
+							<span class="label label-primary"><%= project.check_status %></span>
+							<% elsif project.check_status == "On Track" %>
 							<span class="label label-success"><%= project.check_status %></span>
-							<% elsif project.check_status == "Incomplete" %>
+							<% elsif project.check_status == "Off Track" %>
 							<span class="label label-danger"><%= project.check_status %></span>
 							<% end %>
 						</td>
@@ -60,7 +62,7 @@
 				<%= submit_tag "Invite" %>
 			<% end %>
 
-<%= link_to "Go Back", root_path %>
+
 
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">

@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">projects</a></li>
-        <li><a href="#">recent</a></li>
+        <li><a href= "/projects/<%= current_user.projects.order(:updated_at).last.id %>">recent</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-justified">
         <img id="coffeelogo" src="../assets/coffeecup.png">
@@ -27,5 +27,5 @@
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container text-center">
-      <img src="../assets/logo.png" id="logo">
+      <a href="/"><img src="../assets/logo.png" id="logo"></a>
 </div>

@@ -36,7 +36,7 @@
       <div class="modal-body">
         <div class="text-center">
          <% unless task.document.url == "/documents/original/missing.png" %>
-         <%= link_to "View Attachment" ,task.document.url, :target => "_blank" %>
+         <%= link_to "View Attachment", task.document.url, :target => "_blank" %>
          <% end %>
          <br>
          <%= form_for task, :method => 'put', 
@@ -55,6 +55,7 @@
          <%= form.hidden_field :status, :value => "Complete" %>
          <%= form.submit "Mark As Complete"%>
          <% end %>
+         <% end %>
          <%= form_for task, :method => 'put', 
          :html => { :multipart => true } do |form| %>
          <%= form.file_field :document %>
@@ -69,7 +70,6 @@
           <% end %>
           <% end %>
         </li>
-        <% end %>
         <%= link_to "Delete", task, :method => :delete %>
 
       </li>
@@ -97,17 +97,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-<br>
 
 
 
@@ -146,13 +135,15 @@
 <% available_users_component = @available_users - @component.users %>
 
 <ol> <% available_users_component.each do |user|%>
-  <li> <%= user.email %> 
-    <%= form_for @component, :method => "PUT" do |f| %>
-    <%= f.hidden_field :user_id, :value => user.id %>
-    <%= f.submit "Add" %>
-    <% end %>
-  </li>
-  <% end %>
+
+<li> <%= user.email %> 
+      <%= form_for @component, :method => "PUT" do |f| %>
+      <%= f.hidden_field :user_id, :value => user.id %>
+      <%= f.submit "Add" %>
+      <% end %>
+</li>
+<% end %>
+
 
 </ol>
 <%= link_to "Home", root_path  %>

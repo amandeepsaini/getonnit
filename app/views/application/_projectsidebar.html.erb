@@ -29,7 +29,7 @@
     <%= form_tag("/projects/#{@project.id}", :method => 'PUT') do %>
     <%= label_tag "User Emails:" %>
     <div class="ui icon input">
-        <%= email_field_tag :emails %>
+        <%= email_field_tag :email %>
     </div>
     <%= submit_tag "Add", :class => "btn btn-default" %>
     <% end %>
