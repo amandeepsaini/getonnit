@@ -16,7 +16,7 @@ class TasksController < ApplicationController
 
   def update
 
-    @task = Task.find(params[:task][:task_id])
+    @task = Task.find(params[:id])
     if params[:task][:document] == "delete_attachment"
       @task.document = nil
     else
@@ -27,8 +27,8 @@ class TasksController < ApplicationController
   end
 
   def add_users
-        @tasks = Task.find(params[:task][:task_id])
-        @user = User.find(params[:task][:user_id])
+        @tasks = Task.find(params[:id])
+        @user = User.find(params[:id])
 
     if @task.users.include?(@user)
       redirect_to @task,

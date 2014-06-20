@@ -52,11 +52,6 @@ ActiveRecord::Schema.define(version: 20140619131019) do
     t.integer "project_id", null: false
   end
 
-  create_table "schedules", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "tasks", force: true do |t|
     t.string   "name"
     t.text     "description"
