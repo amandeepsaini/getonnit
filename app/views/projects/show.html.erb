@@ -41,7 +41,11 @@
 					</div>
 				</td>
 				<% end %>
-				<td class="col-md-2"><%= component.deadline %></td>
+				<td class="col-md-2"><% if component.deadline == nil %>
+								<%= "No Deadline" %>
+							<% else %>
+							<%= component.deadline.strftime("%b %d, %Y") %>
+							<% end %></td>
 				<!-- remember to add popup to confirm deletetion for this, and components and tasks too -->
 				<td class="col-md-1"><%= link_to "Delete", component, :method => :delete %></td>
 			</tr>

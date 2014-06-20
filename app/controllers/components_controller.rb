@@ -36,6 +36,7 @@ class ComponentsController < ApplicationController
       alert: "User already In"
     else 
       @component.users << @user
+      @component.save
       redirect_to @component
     end
   end

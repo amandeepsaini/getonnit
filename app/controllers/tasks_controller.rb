@@ -19,6 +19,17 @@ class TasksController < ApplicationController
     @task = Task.find(params[:task][:task_id])
     if params[:task][:document] == "delete_attachment"
       @task.document = nil
+    elsif params[:task][:user_id] != nil
+      @user = User.find(params[:task][:user_id])
+      if @task.users.include?(@user)
+        redirect_to @task.component,
+        alert: "User already In"
+      else
+        @task.users << @user
+        unless @task.component.users.include?(@user)
+          @task.component.users << @user
+        end
+      end
     else
       @task.update_attributes(task_params)
     end
@@ -26,17 +37,6 @@ class TasksController < ApplicationController
     redirect_to (:back)
   end
 
-  def add_users
-        @tasks = Task.find(params[:task][:task_id])
-        @user = User.find(params[:task][:user_id])
-
-    if @task.users.include?(@user)
-      redirect_to @task,
-      alert: "User already In"
-    else 
-      @task.users << @user
-    end 
-  end 
 
   def edit
   end
@@ -53,6 +53,6 @@ class TasksController < ApplicationController
     private
     def task_params
       params.require(:task).permit(:name, :description, :deadline,
-        :component_id, :document, :status)
+        :component_id, :document, :status, :user_id)
     end
 end

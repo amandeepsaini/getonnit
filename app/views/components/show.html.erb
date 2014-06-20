@@ -64,6 +64,22 @@
   <%= form.submit "Update Task" %>
 <% end %>
 
+<% task.users.each do |user| %>
+<%= user.email %>
+<% end %>
+
+<% available_users_task = @available_users - task.users %>
+
+<ol> <% available_users_task.each do |user|%>
+<li> <%= user.email %> 
+      <%= form_for task, :method => "PUT" do |f| %>
+      <%= f.hidden_field :task_id, :value => task.id %>
+      <%= f.hidden_field :user_id, :value => user.id %>
+      <%= f.submit "Add" %>
+      <% end %>
+      <% end %>
+</li>
+
 <%= link_to "Delete", task, :method => :delete %>
 
 </li>
@@ -92,11 +108,11 @@
 
 <h3> Add User to Component </h3>
 
-<% @available_users = @available_users - @component.users %>
+<% available_users_component = @available_users - @component.users %>
 
-<ol> <% @available_users.each do |user|%>
+<ol> <% available_users_component.each do |user|%>
 <li> <%= user.email %> 
-      <%= form_for @component, :url => "/components/:id", :method => "PUT" do |f| %>
+      <%= form_for @component, :method => "PUT" do |f| %>
       <%= f.hidden_field :component_id, :value => @component.id %>
       <%= f.hidden_field :user_id, :value => user.id %>
       <%= f.submit "Add" %>
