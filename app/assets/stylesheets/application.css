@@ -170,3 +170,17 @@ color: #fff;
   background-color: #4386ca;
   border-color: #4386ca;
 }
+.bg1 {
+  display: block;
+    max-width:100%;
+    max-height:auto;
+    width: auto;
+    height: auto;
+  padding: 0;
+  background-attachment: fixed;
+  background: url('../assets/home-cover.jpg') no-repeat 50% 0;
+}
+.homepic  {
+  border-radius: 15px;
+  border: solid 1px;
+}
