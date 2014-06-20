@@ -8,6 +8,7 @@
 			<tr>
 				<th>name</th>
 				<th>status</th>
+				<th>progress</th>
 				<th>deadline</th>
 				<th></th>
 			</tr>
@@ -20,7 +21,8 @@
 			<tr>
 				<!-- /components/component.id -->
 				<td class="col-md-2"><%= link_to component.name, component %></td>
-				<td class="col-md-7">
+				<td class="col-md-1"> <%= component.check_status %> </td>
+				<td class="col-md-6">
 					<% if completed.nan? || overdue.nan? %>
 					no tasks added
 					<% else %>

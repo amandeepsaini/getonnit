@@ -3,15 +3,24 @@ class Component < ActiveRecord::Base
 	has_many :tasks, dependent: :destroy	
 	belongs_to :project, :touch => true	
 
-	def check_status	
-		self.status = "Complete"
+	def check_status
+		complete = true	
+		self.status = "On Track"
 		if self.tasks.size == 0
 			self.status = "No Tasks"
+			complete = false
 		end
 		self.tasks.each do |task|
-			if task.status == "Incomplete" || task.status == "Overdue"
-				self.status = "Incomplete"
+			if task.check_status == "Overdue"
+				self.status = "Off Track"
+				complete = false
 			end
+			if task.check_status == "Incomplete"
+				complete = false
+			end
+		end
+		if complete
+			self.status = "Complete"
 		end
 		self.status 
 

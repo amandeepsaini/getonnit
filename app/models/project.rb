@@ -4,14 +4,33 @@ class Project < ActiveRecord::Base
 	has_many :messages
 
 	def check_status 
-		self.status = "Complete" 
+		self.status = "On Track" 
+		complete = true
+		empty = true
 		if self.components.size == 0 
-			self.status = "Empty Project" 
+			self.status = "Empty"
+			complete = false 
 		end 
 		self.components.each do |component| 
-			if component.check_status == "Incomplete"
-				self.status = "Incomplete"  			
-			end 
+			if component.check_status == "Off Track"
+				self.status = "Off Track"
+				complete = false
+				empty = false
+				break
+			end
+			if component.check_status == "On Track"
+				complete = false
+				empty = false			
+			end
+			if component.check_status == "Complete"
+				empty = false
+			end
+		end 
+		if complete
+			self.status = "Complete"
+		end
+		if empty
+			self.status = "Empty"
 		end 
 
 	 self.status 
