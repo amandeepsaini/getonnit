@@ -24,7 +24,6 @@
 						<th><%= sort_link @search, :deadline, "Deadline" %></th>
 						<th><%= sort_link @search, :updated_at, "Modified" %></th>
 						<th></th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,7 +46,6 @@
 							<% else %>
 							<%= project.deadline.strftime("%b %d, %Y") %>
 							<% end %></td>
-						<td><%= project.updated_at.strftime("%b %d, %Y %I:%M %P") %></td>
 						<!-- remember to add popup to confirm deletetion for this, and components and tasks too -->
 						<td> <%= time_ago_in_words(project.updated_at) %> ago</td>
 

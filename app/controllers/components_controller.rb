@@ -52,7 +52,7 @@ class ComponentsController < ApplicationController
   def show
     @component = Component.find(params[:id])
     @name = @component.name
-    @tasks = @component.tasks
+    @tasks = @component.tasks.order(:deadline)
     @task = Task.new
     @available_users = @component.project.users
     @search = @component.project.users.search(params[:q])
