@@ -16,7 +16,7 @@ class TasksController < ApplicationController
 
   def update
 
-    @task = Task.find(params[:task][:task_id])
+    @task = Task.find(params[:id])
     if params[:task][:document] == "delete_attachment"
       @task.document = nil
     elsif params[:task][:user_id] != nil

@@ -31,7 +31,10 @@
 <ol>
 <% @tasks.each do |task| %>
 <li><%= link_to task.name, task %>
+  <% unless task.document.url == "/documents/original/missing.png" %>
   <%= link_to "View Attachment" ,task.document.url, :target => "_blank" %>
+  <% end %>
+
 
 
 
@@ -40,9 +43,13 @@
 
  <br>
  <%= task.check_status %>
- <%= task.deadline %>
+<% if task.deadline == nil %>
+                <%= "No Deadline" %>
+              <% else %>
+              <%= task.deadline.strftime("%b %d, %Y") %>
+              <% end %>
  
- <%= form_for @task, :url => '/tasks/task.id', :method => 'put', 
+ <%= form_for task, :method => 'put', 
   :html => { :multipart => true } do |form| %>
 <%= form.hidden_field :task_id, :value => task.id %>
 <%= form.hidden_field :document, :value => "delete_attachment" %>
@@ -51,17 +58,23 @@
 
   
 
+<% if task.status == "Complete" %>
+    <%= form_for task, :method => 'put' do |form| %>
+      <%= form.hidden_field :status, :value => "Incomplete" %>
+      <%= form.submit "Mark As Incomplete"%>
+    <% end %>
+  <% else %>
+    <%= form_for task, :method => 'put' do |form| %>
+        <%= form.hidden_field :status, :value => "Complete" %>
+        <%= form.submit "Mark As Complete"%>
+      <% end %>
 
+  <% end %>
 
-<%= form_for @task, :url => '/tasks/task.id', :method => 'put', 
+<%= form_for task, :method => 'put', 
   :html => { :multipart => true } do |form| %>
-  <%= form.label :complete %>
-  <%= form.radio_button(:status, "Complete") %>
-  <%= form.label :incomplete %>
-  <%= form.radio_button(:status, "Incomplete") %>
   <%= form.file_field :document %>
-  <%= form.hidden_field :task_id, :value => task.id  %>
-  <%= form.submit "Update Task" %>
+  <%= form.submit "Add Attachment" %>
 <% end %>
 
 <% task.users.each do |user| %>
@@ -73,7 +86,6 @@
 <ol> <% available_users_task.each do |user|%>
 <li> <%= user.email %> 
       <%= form_for task, :method => "PUT" do |f| %>
-      <%= f.hidden_field :task_id, :value => task.id %>
       <%= f.hidden_field :user_id, :value => user.id %>
       <%= f.submit "Add" %>
       <% end %>
@@ -113,7 +125,6 @@
 <ol> <% available_users_component.each do |user|%>
 <li> <%= user.email %> 
       <%= form_for @component, :method => "PUT" do |f| %>
-      <%= f.hidden_field :component_id, :value => @component.id %>
       <%= f.hidden_field :user_id, :value => user.id %>
       <%= f.submit "Add" %>
       <% end %>

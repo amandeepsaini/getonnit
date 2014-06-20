@@ -38,10 +38,5 @@ class Project < ActiveRecord::Base
 
 	end
 
-	def latest_modified
-		self.last
-
-
-
-	end
+	
 end
